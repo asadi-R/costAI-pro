@@ -1,0 +1,224 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CostAI | مدیریت بهای تمام‌شده</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f3f7f4;color:#20352a;font-family:Tahoma,Arial,sans-serif}
+header{background:#126b45;color:white;padding:22px 18px;border-radius:0 0 22px 22px}
+header h1{margin:0 0 8px;font-size:25px}
+header p{margin:0;color:#d5eee0;font-size:13px}
+nav{display:flex;gap:8px;padding:14px;overflow-x:auto}
+nav button{border:0;background:white;color:#285b40;padding:12px 16px;border-radius:12px;white-space:nowrap;font-weight:bold}
+nav button.active{background:#126b45;color:white}
+main{padding:0 14px 30px;max-width:850px;margin:auto}
+section{display:none}
+section.active{display:block}
+h2{font-size:19px;margin:16px 0}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.card{background:white;border-radius:16px;padding:17px;box-shadow:0 3px 12px #153d1d0b;margin-bottom:12px}
+.card small{color:#718277}
+.card strong{display:block;font-size:20px;margin-top:12px;color:#126b45}
+input,select{width:100%;padding:13px;margin:7px 0 12px;border:1px solid #dce8df;border-radius:10px;font:inherit;background:white}
+label{font-size:13px;font-weight:bold}
+.primary{background:#126b45;color:white;border:0;padding:13px 18px;border-radius:11px;font:inherit;width:100%;font-weight:bold}
+.secondary{background:#e5f2e9;color:#126b45;border:0;padding:9px 12px;border-radius:9px;font:inherit}
+.danger{background:#fff0ed;color:#b33b2d;border:0;padding:9px 12px;border-radius:9px;font:inherit}
+.item{background:white;padding:14px;border-radius:13px;margin:10px 0;line-height:2}
+.item b{color:#126b45}
+.muted{color:#78877e;font-size:12px}
+.empty{text-align:center;color:#89968e;padding:25px}
+hr{border:0;border-top:1px solid #edf1ed;margin:12px 0}
+</style>
+</head>
+<body>
+<header>
+<h1>🌿 CostAI</h1>
+<p>سامانه مدیریت و محاسبه بهای تمام‌شده تولید</p>
+</header>
+
+<nav>
+<button class="active" onclick="show('home',this)">داشبورد</button>
+<button onclick="show('products',this)">محصولات</button>
+<button onclick="show('materials',this)">مواد اولیه</button>
+<button onclick="show('orders',this)">سفارش تولید</button>
+</nav>
+
+<main>
+<section id="home" class="active">
+<h2>داشبورد مدیریتی</h2>
+<div class="grid">
+<div class="card"><small>تعداد محصولات</small><strong id="count">۰</strong></div>
+<div class="card"><small>مجموع هزینه تولید</small><strong id="total">۰ ریال</strong></div>
+<div class="card"><small>مواد اولیه ثبت‌شده</small><strong id="mcount">۰</strong></div>
+<div class="card"><small>سفارش‌های تولید</small><strong id="ocount">۰</strong></div>
+</div>
+<div class="card">
+<h3>آخرین محصولات ثبت‌شده</h3>
+<div id="recent" class="empty">هنوز محصولی ثبت نشده است.</div>
+</div>
+</section>
+
+<section id="products">
+<h2>مدیریت محصولات</h2>
+<div class="card">
+<h3>ثبت محصول جدید</h3>
+<label>نام محصول</label>
+<input id="pname" placeholder="مثلاً میز چوبی">
+<label>هزینه مواد اولیه (ریال)</label>
+<input id="raw" type="number" inputmode="numeric" placeholder="۰">
+<label>دستمزد مستقیم (ریال)</label>
+<input id="labor" type="number" inputmode="numeric" placeholder="۰">
+<label>سربار تولید (ریال)</label>
+<input id="overhead" type="number" inputmode="numeric" placeholder="۰">
+<label>تعداد محصولات سالم</label>
+<input id="qty" type="number" inputmode="numeric" placeholder="۰">
+<button class="primary" onclick="addProduct()">ثبت و محاسبه بهای تمام‌شده</button>
+</div>
+<h3>سوابق محصولات</h3>
+<div id="plist" class="empty">محصولی ثبت نشده است.</div>
+</section>
+
+<section id="materials">
+<h2>مدیریت مواد اولیه و انبار</h2>
+<div class="card">
+<h3>ثبت ماده اولیه</h3>
+<label>نام ماده اولیه</label>
+<input id="mname" placeholder="مثلاً چوب">
+<label>واحد اندازه‌گیری</label>
+<select id="unit">
+<option>عدد</option><option>کیلوگرم</option><option>متر</option><option>لیتر</option><option>بسته</option>
+</select>
+<label>قیمت هر واحد (ریال)</label>
+<input id="price" type="number" inputmode="numeric" placeholder="۰">
+<label>موجودی</label>
+<input id="stock" type="number" inputmode="decimal" placeholder="۰">
+<button class="primary" onclick="addMaterial()">ثبت ماده اولیه</button>
+</div>
+<h3>فهرست مواد اولیه</h3>
+<div id="mlist" class="empty">ماده اولیه‌ای ثبت نشده است.</div>
+</section>
+
+<section id="orders">
+<h2>مدیریت سفارش تولید</h2>
+<div class="card">
+<h3>ثبت سفارش جدید</h3>
+<label>نام سفارش یا محصول</label>
+<input id="oname" placeholder="نام محصول">
+<label>تعداد موردنیاز</label>
+<input id="required" type="number" inputmode="numeric" placeholder="۰">
+<label>تعداد تولیدشده</label>
+<input id="produced" type="number" inputmode="numeric" placeholder="۰">
+<label>تعداد محصولات سالم</label>
+<input id="good" type="number" inputmode="numeric" placeholder="۰">
+<button class="primary" onclick="addOrder()">ثبت سفارش</button>
+</div>
+<h3>فهرست سفارش‌ها</h3>
+<div id="olist" class="empty">سفارشی ثبت نشده است.</div>
+</section>
+</main>
+
+<script>
+const load=(key)=>JSON.parse(localStorage.getItem(key)||"[]");
+const save=(key,data)=>localStorage.setItem(key,JSON.stringify(data));
+let products=load("costai_pro_products");
+let materials=load("costai_pro_materials");
+let orders=load("costai_pro_orders");
+
+const money=n=>Number(n||0).toLocaleString("fa-IR");
+const val=id=>document.getElementById(id).value.trim();
+const num=id=>Math.max(0,Number(val(id))||0);
+
+function show(id,btn){
+document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+btn.classList.add("active");
+}
+
+function addProduct(){
+let name=val("pname"),q=num("qty");
+if(!name||q<=0){alert("نام محصول و تعداد محصولات سالم را وارد کنید.");return;}
+let raw=num("raw"),labor=num("labor"),overhead=num("overhead");
+products.unshift({id:Date.now(),name,raw,labor,overhead,qty:q,total:raw+labor+overhead,unit:(raw+labor+overhead)/q});
+save("costai_pro_products",products);
+["pname","raw","labor","overhead","qty"].forEach(id=>document.getElementById(id).value="");
+render();
+}
+
+function addMaterial(){
+let name=val("mname");
+if(!name){alert("نام ماده اولیه را وارد کنید.");return;}
+materials.unshift({id:Date.now(),name,unit:val("unit"),price:num("price"),stock:num("stock")});
+save("costai_pro_materials",materials);
+["mname","price","stock"].forEach(id=>document.getElementById(id).value="");
+render();
+}
+
+function addOrder(){
+let name=val("oname"),required=num("required");
+if(!name||required<=0){alert("نام سفارش و تعداد موردنیاز را وارد کنید.");return;}
+let produced=num("produced"),good=num("good");
+orders.unshift({id:Date.now(),name,required,produced,good});
+save("costai_pro_orders",orders);
+["oname","required","produced","good"].forEach(id=>document.getElementById(id).value="");
+render();
+}
+
+function removeItem(type,id){
+if(!confirm("از حذف این مورد مطمئن هستید؟"))return;
+if(type==="p"){products=products.filter(x=>x.id!==id);save("costai_pro_products",products);}
+if(type==="m"){materials=materials.filter(x=>x.id!==id);save("costai_pro_materials",materials);}
+if(type==="o"){orders=orders.filter(x=>x.id!==id);save("costai_pro_orders",orders);}
+render();
+}
+
+function render(){
+document.getElementById("count").textContent=money(products.length);
+document.getElementById("total").textContent=money(products.reduce((s,p)=>s+p.total,0))+" ریال";
+document.getElementById("mcount").textContent=money(materials.length);
+document.getElementById("ocount").textContent=money(orders.length);
+
+document.getElementById("plist").innerHTML=products.length?products.map(p=>`
+<div class="item">
+<b>${escapeHTML(p.name)}</b>
+<hr>
+مجموع هزینه تولید: ${money(p.total)} ریال<br>
+بهای هر واحد: <b>${money(p.unit)} ریال</b><br>
+تعداد سالم: ${money(p.qty)}
+<hr>
+<button class="danger" onclick="removeItem('p',${p.id})">حذف</button>
+</div>`).join(""):'<div class="empty">محصولی ثبت نشده است.</div>';
+
+document.getElementById("mlist").innerHTML=materials.length?materials.map(m=>`
+<div class="item">
+<b>${escapeHTML(m.name)}</b><br>
+قیمت هر واحد: ${money(m.price)} ریال<br>
+موجودی: ${money(m.stock)} ${escapeHTML(m.unit)}<br>
+ارزش موجودی: ${money(m.price*m.stock)} ریال
+<hr><button class="danger" onclick="removeItem('m',${m.id})">حذف</button>
+</div>`).join(""):'<div class="empty">ماده اولیه‌ای ثبت نشده است.</div>';
+
+document.getElementById("olist").innerHTML=orders.length?orders.map(o=>`
+<div class="item">
+<b>${escapeHTML(o.name)}</b><br>
+تعداد موردنیاز: ${money(o.required)}<br>
+تعداد تولیدشده: ${money(o.produced)}<br>
+تعداد سالم: ${money(o.good)}<br>
+وضعیت: ${o.produced>=o.required?"تکمیل‌شده":"در حال تولید"}
+<hr><button class="danger" onclick="removeItem('o',${o.id})">حذف</button>
+</div>`).join(""):'<div class="empty">سفارشی ثبت نشده است.</div>';
+
+document.getElementById("recent").innerHTML=products.length?products.slice(0,3).map(p=>`<div class="item"><b>${escapeHTML(p.name)}</b><br>بهای هر واحد: ${money(p.unit)} ریال</div>`).join(""):'هنوز محصولی ثبت نشده است.';
+}
+
+function escapeHTML(s){
+return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+render();
+</script>
+</body>
+</html>
