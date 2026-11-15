@@ -314,8 +314,59 @@ $('dashCost').textContent=money(avg);
 $('dashStock').textContent=money(materials.reduce((s,m)=>s+m.price*m.stock,0));
 $('recentProducts').innerHTML=products.length?products.slice(0,5).map(p=>`<p>${esc(p.name)} — ${money(productTotal(p)/p.qty)} برای هر واحد</p>`).join(''):'هنوز محصولی ثبت نشده است.';
 }
-function renderAll(){renderMaterials();renderProducts();renderDashboard()}
-renderAll();
+
+function renderReports(){
+const total=products.reduce((s,p)=>s+productTotal(p),0);
+const average=products.length?products.reduce((s,p)=>s+productTotal(p)/p.qty,0)/products.length:0;
+$('reportProducts').textContent=fmt(products.length);
+$('reportMaterials').textContent=fmt(materials.length);
+$('reportTotalCost').textContent=money(total);
+$('reportAverageCost').textContent=money(average);
+
+$('reportTable').innerHTML=products.length?
+'<div class="table-wrap"><table><tr><th>محصول</th><th>تعداد سالم</th><th>هزینه مواد</th><th>دستمزد</th><th>سربار</th><th>هزینه هر واحد</th></tr>'+
+products.map(p=>{
+const mc=materialCost(p.bom);
+return `<tr><td>${esc(p.name)}</td><td>${fmt(p.qty)}</td><td>${money(mc)}</td><td>${money(p.labor)}</td><td>${money(p.overhead)}</td><td>${money(productTotal(p)/p.qty)}</td></tr>`;
+}).join('')+'</table></div>':
+'<div class="empty">هنوز اطلاعاتی برای گزارش وجود ندارد.</div>';
+}
+
+function renderAnalysis(){
+const mat=products.reduce((s,p)=>s+materialCost(p.bom),0);
+const labor=products.reduce((s,p)=>s+p.labor,0);
+const overhead=products.reduce((s,p)=>s+p.overhead,0);
+const total=mat+labor+overhead;
+
+$('analysisMaterials').textContent=money(mat);
+$('analysisLabor').textContent=money(labor);
+$('analysisOverhead').textContent=money(overhead);
+
+if(!total){
+$('analysisSummary').textContent='برای تحلیل، ابتدا محصولات را ثبت کنید.';
+$('analysisDetails').innerHTML='';
+return;
+}
+
+const percent=n=>fmt(n/total*100)+'٪';
+$('analysisSummary').innerHTML=
+'سهم مواد اولیه: <b>'+percent(mat)+'</b><br>'+
+'سهم دستمزد مستقیم: <b>'+percent(labor)+'</b><br>'+
+'سهم سربار تولید: <b>'+percent(overhead)+'</b>';
+
+const largest=Math.max(mat,labor,overhead);
+let title=largest===mat?'مواد اولیه':largest===labor?'دستمزد مستقیم':'سربار تولید';
+$('analysisDetails').innerHTML='<div class="result">بیشترین سهم هزینه تولید مربوط به <b>'+title+'</b> است.</div>';
+}
+
+function renderAll(){
+renderMaterials();
+renderProducts();
+renderDashboard();
+renderReports();
+renderAnalysis();
+}
+
 </script>
 </body>
 </html>
