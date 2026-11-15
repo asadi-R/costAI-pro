@@ -367,6 +367,27 @@ renderReports();
 renderAnalysis();
 }
 
+function convertAllNumbersToPersian(){
+document.querySelectorAll('.numeric').forEach(el=>{
+if(el.value){
+let v=digits(el.value);
+let parts=v.split('.');
+let whole=(parts.shift()||'').replace(/\B(?=(\d{3})+(?!\d))/g,'٬');
+let decimal=parts.length?'٫'+parts.join(''):'';
+el.value=(whole+decimal).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[Number(d)]);
+}
+});
+}
+
+document.querySelectorAll('.numeric').forEach(el=>{
+el.addEventListener('blur',convertAllNumbersToPersian);
+});
+
+const oldFmt=fmt;
+fmt=function(v){
+return oldFmt(v).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[Number(d)]);
+};
+
 </script>
 </body>
 </html>
