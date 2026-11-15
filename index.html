@@ -192,7 +192,7 @@ const productKey = 'costai_pro_products_v2';
 
 function readStore(key){
  try{
-  const v=JSON.parse(localStorage.getItem(key)||'[]');
+  const v=JSON.parse(sessionStorage.getItem(key)||'[]');
   return Array.isArray(v)?v:[];
  }catch(e){return []}
 }
@@ -225,8 +225,8 @@ function esc(s){
 }
 
 function save(){
- localStorage.setItem(materialKey,JSON.stringify(materials));
- localStorage.setItem(productKey,JSON.stringify(products));
+sessionstorage.setItem(materialKey,JSON.stringify(materials));
+sessionstorage.setItem(productKey,JSON.stringify(products));
 }
 
 function showPage(id){
