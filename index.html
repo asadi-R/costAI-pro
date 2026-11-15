@@ -213,8 +213,8 @@ localStorage.setItem(productKey,JSON.stringify(products));
 function esc(s){
 return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
-function showPage(id){
-document.querySelectorAll('main section').forEach(s=>s.classList.toggle('hidden',s.id!==id));
+function showPage(id)
+document.querySelectorAll('section').forEach(s=>s.classList.toggle('hidden',s.id!==id));
 document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.page===id));
 }
 document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
