@@ -47,6 +47,37 @@ th{background:#f2f7f3}
 <h1>CostAI Pro</h1>
 <p>سامانه مدیریت بهای تمام‌شده تولید</p>
 </header>
+
+<section id="reports" class="hidden">
+<div class="card">
+<h2>گزارش خلاصه عملکرد</h2>
+<div class="grid">
+<div class="metric"><small>تعداد محصولات ثبت‌شده</small><strong id="reportProducts">۰</strong></div>
+<div class="metric"><small>تعداد مواد اولیه</small><strong id="reportMaterials">۰</strong></div>
+<div class="metric"><small>مجموع هزینه تولید</small><strong id="reportTotalCost">۰ ریال</strong></div>
+<div class="metric"><small>میانگین بهای هر واحد</small><strong id="reportAverageCost">۰ ریال</strong></div>
+</div>
+</div>
+<div class="card">
+<h2>گزارش بهای تمام‌شده محصولات</h2>
+<div id="reportTable" class="empty">هنوز اطلاعاتی برای گزارش وجود ندارد.</div>
+</div>
+</section>
+
+<section id="analysis" class="hidden">
+<div class="card">
+<h2>تحلیل مدیریتی هزینه‌ها</h2>
+<p class="muted">سهم هر بخش از مجموع هزینه تولید محصولات ثبت‌شده</p>
+<div class="grid">
+<div class="metric"><small>هزینه مواد اولیه</small><strong id="analysisMaterials">۰ ریال</strong></div>
+<div class="metric"><small>دستمزد مستقیم</small><strong id="analysisLabor">۰ ریال</strong></div>
+<div class="metric"><small>سربار تولید</small><strong id="analysisOverhead">۰ ریال</strong></div>
+</div>
+<div class="result" id="analysisSummary">برای تحلیل، ابتدا محصولات را ثبت کنید.</div>
+<div id="analysisDetails"></div>
+</div>
+</section>
+
 <main>
 
 <nav>
