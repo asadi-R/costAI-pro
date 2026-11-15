@@ -8,94 +8,61 @@
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#f3f7f4;color:#24352a;font-family:Tahoma,Arial,sans-serif;line-height:1.8}
-header{background:#137b4b;color:white;padding:25px 16px;text-align:center}
-header h1{margin:0;font-size:27px}
-header p{margin:5px 0 0}
-main{max-width:1050px;margin:20px auto;padding:0 12px}
+header{background:#137b4b;color:white;padding:22px 14px;text-align:center}
+header h1{margin:0;font-size:26px}
+main{max-width:1100px;margin:20px auto;padding:0 12px}
 nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
-button{border:0;border-radius:9px;padding:11px 16px;font:inherit;cursor:pointer}
+button{border:0;border-radius:9px;padding:10px 14px;font:inherit;cursor:pointer}
 .tab{background:#e0eae3;color:#245438}
 .tab.active,.primary{background:#16804e;color:white}
 .secondary{background:#e7eee9;color:#315a42}
 .danger{background:#ffe5e5;color:#a32626}
-.card{background:white;border-radius:14px;padding:18px;margin-bottom:16px;box-shadow:0 2px 12px #173d2510}
+.card{background:white;border-radius:14px;padding:17px;margin-bottom:16px;box-shadow:0 2px 12px #173d2510}
 h2{font-size:19px;margin:0 0 14px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
-.metric{background:#eff8f1;border-radius:12px;padding:15px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.metric{background:#eff8f1;border-radius:12px;padding:14px}
 .metric small{display:block;color:#637568}
-.metric strong{font-size:20px;overflow-wrap:anywhere}
+.metric strong{font-size:19px}
 label{display:block;font-size:14px;margin-bottom:5px}
-input,select{width:100%;padding:11px;border:1px solid #d4e0d7;border-radius:8px;background:white;font:inherit;min-width:0}
-.field{margin-bottom:13px}
+input,select{width:100%;padding:10px;border:1px solid #d4e0d7;border-radius:8px;background:white;font:inherit;min-width:0}
+.field{margin-bottom:12px}
 .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
-.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px}
 .table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:520px}
-th,td{padding:10px;border-bottom:1px solid #e6eee8;text-align:right}
+table{width:100%;border-collapse:collapse;min-width:560px}
+th,td{padding:9px;border-bottom:1px solid #e6eee8;text-align:right}
 th{background:#f2f7f3}
 .result{background:#eff8f1;padding:12px;border-radius:9px;margin:12px 0}
-.muted{color:#758278;font-size:13px}
-.empty{color:#78857b;padding:12px;text-align:center}
+.muted,.empty{color:#758278;font-size:13px}
+.empty{text-align:center;padding:14px}
 .material-row{display:grid;grid-template-columns:2fr 1fr auto;gap:8px;margin-bottom:9px}
-.hidden{display:none!important}
-.badge{background:#e7f4ea;padding:3px 8px;border-radius:20px;font-size:12px}
+.page[hidden]{display:none!important}
+footer{text-align:center;color:#758278;padding:18px;font-size:13px}
 @media(max-width:520px){.material-row{grid-template-columns:1fr 1fr}.material-row button{grid-column:1/-1}}
 </style>
 </head>
 <body>
 <header>
 <h1>CostAI Pro</h1>
-<p>سامانه مدیریت بهای تمام‌شده تولید</p>
+<div>سامانه مدیریت بهای تمام‌شده تولید</div>
 </header>
 
-<section id="reports" class="hidden">
-<div class="card">
-<h2>گزارش خلاصه عملکرد</h2>
-<div class="grid">
-<div class="metric"><small>تعداد محصولات ثبت‌شده</small><strong id="reportProducts">۰</strong></div>
-<div class="metric"><small>تعداد مواد اولیه</small><strong id="reportMaterials">۰</strong></div>
-<div class="metric"><small>مجموع هزینه تولید</small><strong id="reportTotalCost">۰ ریال</strong></div>
-<div class="metric"><small>میانگین بهای هر واحد</small><strong id="reportAverageCost">۰ ریال</strong></div>
-</div>
-</div>
-<div class="card">
-<h2>گزارش بهای تمام‌شده محصولات</h2>
-<div id="reportTable" class="empty">هنوز اطلاعاتی برای گزارش وجود ندارد.</div>
-</div>
-</section>
-
-<section id="analysis" class="hidden">
-<div class="card">
-<h2>تحلیل مدیریتی هزینه‌ها</h2>
-<p class="muted">سهم هر بخش از مجموع هزینه تولید محصولات ثبت‌شده</p>
-<div class="grid">
-<div class="metric"><small>هزینه مواد اولیه</small><strong id="analysisMaterials">۰ ریال</strong></div>
-<div class="metric"><small>دستمزد مستقیم</small><strong id="analysisLabor">۰ ریال</strong></div>
-<div class="metric"><small>سربار تولید</small><strong id="analysisOverhead">۰ ریال</strong></div>
-</div>
-<div class="result" id="analysisSummary">برای تحلیل، ابتدا محصولات را ثبت کنید.</div>
-<div id="analysisDetails"></div>
-</div>
-</section>
-
 <main>
-
-<nav>
-<button class="tab active" data-page="dashboard">داشبورد</button>
-<button class="tab" data-page="materials">مواد اولیه و انبار</button>
-<button class="tab" data-page="products">محصولات</button>
-<button class="tab" data-page="reports">گزارش‌ها</button>
-<button class="tab" data-page="analysis">تحلیل مدیریتی</button>
+<nav aria-label="منوی اصلی">
+<button type="button" class="tab active" data-page="dashboard">داشبورد</button>
+<button type="button" class="tab" data-page="materials">مواد اولیه و انبار</button>
+<button type="button" class="tab" data-page="products">محصولات</button>
+<button type="button" class="tab" data-page="reports">گزارش‌ها</button>
+<button type="button" class="tab" data-page="analysis">تحلیل مدیریتی</button>
 </nav>
 
-
-<section id="dashboard">
+<section id="dashboard" class="page">
 <div class="card">
 <h2>داشبورد مدیریتی</h2>
 <div class="grid">
 <div class="metric"><small>تعداد محصولات</small><strong id="dashProducts">۰</strong></div>
 <div class="metric"><small>تعداد مواد اولیه</small><strong id="dashMaterials">۰</strong></div>
-<div class="metric"><small>میانگین بهای هر محصول</small><strong id="dashCost">۰ ریال</strong></div>
+<div class="metric"><small>میانگین بهای هر واحد</small><strong id="dashCost">۰ ریال</strong></div>
 <div class="metric"><small>ارزش موجودی مواد</small><strong id="dashStock">۰ ریال</strong></div>
 </div>
 </div>
@@ -105,7 +72,7 @@ th{background:#f2f7f3}
 </div>
 </section>
 
-<section id="materials" class="hidden">
+<section id="materials" class="page" hidden>
 <div class="card">
 <h2 id="materialTitle">ثبت ماده اولیه</h2>
 <form id="materialForm">
@@ -118,26 +85,22 @@ th{background:#f2f7f3}
 <div class="field">
 <label for="materialUnit">واحد اندازه‌گیری</label>
 <select id="materialUnit">
-<option value="عدد">عدد</option>
-<option value="کیلوگرم">کیلوگرم</option>
-<option value="گرم">گرم</option>
-<option value="متر">متر</option>
-<option value="لیتر">لیتر</option>
-<option value="بسته">بسته</option>
+<option>عدد</option><option>کیلوگرم</option><option>گرم</option>
+<option>متر</option><option>لیتر</option><option>بسته</option>
 </select>
 </div>
 <div class="field">
 <label for="materialPrice">قیمت هر واحد (ریال)</label>
-<input id="materialPrice" class="numeric" inputmode="decimal" required placeholder="مثلاً ۱۲۵۰۰۰">
+<input id="materialPrice" class="numeric" inputmode="decimal" required>
 </div>
 <div class="field">
 <label for="materialStock">موجودی</label>
-<input id="materialStock" class="numeric" inputmode="decimal" required placeholder="مثلاً ۵۰">
+<input id="materialStock" class="numeric" inputmode="decimal" required>
 </div>
 </div>
 <div class="actions">
-<button class="primary" type="submit" id="materialSubmit">ثبت ماده اولیه</button>
-<button class="secondary hidden" type="button" id="materialCancel">انصراف از ویرایش</button>
+<button class="primary" id="materialSubmit">ثبت ماده اولیه</button>
+<button type="button" class="secondary" id="materialCancel" hidden>انصراف از ویرایش</button>
 </div>
 </form>
 </div>
@@ -147,7 +110,7 @@ th{background:#f2f7f3}
 </div>
 </section>
 
-<section id="products" class="hidden">
+<section id="products" class="page" hidden>
 <div class="card">
 <h2 id="productTitle">ثبت محصول و محاسبه بهای تمام‌شده</h2>
 <form id="productForm">
@@ -155,240 +118,343 @@ th{background:#f2f7f3}
 <div class="row">
 <div class="field">
 <label for="productName">نام محصول</label>
-<input id="productName" required placeholder="نام محصول را وارد کنید">
+<input id="productName" required>
 </div>
 <div class="field">
 <label for="goodQty">تعداد محصول سالم تولیدشده</label>
-<input id="goodQty" class="numeric" inputmode="decimal" required placeholder="مثلاً ۱۰۰">
+<input id="goodQty" class="numeric" inputmode="decimal" required>
 </div>
 <div class="field">
 <label for="laborCost">دستمزد مستقیم (ریال)</label>
-<input id="laborCost" class="numeric" inputmode="decimal" required placeholder="۰">
+<input id="laborCost" class="numeric" inputmode="decimal" required value="۰">
 </div>
 <div class="field">
 <label for="overheadCost">سربار تولید (ریال)</label>
-<input id="overheadCost" class="numeric" inputmode="decimal" required placeholder="۰">
+<input id="overheadCost" class="numeric" inputmode="decimal" required value="۰">
 </div>
 </div>
 <h3>مواد مصرف‌شده</h3>
 <div id="bomRows"></div>
 <div class="actions">
 <button type="button" class="secondary" id="addMaterialRow">+ افزودن ماده</button>
-
+</div>
 <div class="result" id="liveResult">پس از واردکردن اطلاعات، بهای تمام‌شده نمایش داده می‌شود.</div>
-<button class="primary" type="submit" id="productSubmit">ثبت محصول و محاسبه</button>
-<button class="secondary hidden" type="button" id="productCancel">انصراف از ویرایش</button>
+<div class="actions">
+<button class="primary" id="productSubmit">ثبت محصول و محاسبه</button>
+<button type="button" class="secondary" id="productCancel" hidden>انصراف از ویرایش</button>
 </div>
 </form>
 </div>
-
 <div class="card">
 <h2>محصولات ثبت‌شده</h2>
 <div id="productsTable" class="empty">هنوز محصولی ثبت نشده است.</div>
 </div>
 </section>
-</main>
 
+<section id="reports" class="page" hidden>
+<div class="card">
+<h2>گزارش خلاصه عملکرد</h2>
+<div class="grid">
+<div class="metric"><small>تعداد محصولات ثبت‌شده</small><strong id="reportProducts">۰</strong></div>
+<div class="metric"><small>تعداد مواد اولیه</small><strong id="reportMaterials">۰</strong></div>
+<div class="metric"><small>مجموع هزینه تولید ثبت‌شده</small><strong id="reportTotalCost">۰ ریال</strong></div>
+<div class="metric"><small>میانگین بهای هر واحد</small><strong id="reportAverageCost">۰ ریال</strong></div>
+</div>
+</div>
+<div class="card">
+<h2>گزارش بهای تمام‌شده محصولات</h2>
+<div id="reportTable" class="empty">هنوز اطلاعاتی برای گزارش وجود ندارد.</div>
+</div>
+</section>
+
+<section id="analysis" class="page" hidden>
+<div class="card">
+<h2>تحلیل مدیریتی هزینه‌ها</h2>
+<p class="muted">جمع هزینه‌های محصولات ثبت‌شده، بر اساس مواد اولیه، دستمزد و سربار تولید</p>
+<div class="grid">
+<div class="metric"><small>هزینه مواد اولیه</small><strong id="analysisMaterials">۰ ریال</strong></div>
+<div class="metric"><small>دستمزد مستقیم</small><strong id="analysisLabor">۰ ریال</strong></div>
+<div class="metric"><small>سربار تولید</small><strong id="analysisOverhead">۰ ریال</strong></div>
+</div>
+<div class="result" id="analysisSummary">برای تحلیل، ابتدا محصولات را ثبت کنید.</div>
+<div id="analysisDetails"></div>
+</div>
+</section>
+</main>
 <footer>CostAI Pro · اطلاعات در همین مرورگر ذخیره می‌شود.</footer>
-</body>
-</html>
 
 <script>
-const $=id=>document.getElementById(id);
-const materialKey='costai_pro_materials_v2';
-const productKey='costai_pro_products_v2';
-let materials=JSON.parse(localStorage.getItem(materialKey)||'[]');
-let products=JSON.parse(localStorage.getItem(productKey)||'[]');
+'use strict';
+
+const $ = id => document.getElementById(id);
+const materialKey = 'costai_pro_materials_v2';
+const productKey = 'costai_pro_products_v2';
+
+function readStore(key){
+ try{
+  const v=JSON.parse(localStorage.getItem(key)||'[]');
+  return Array.isArray(v)?v:[];
+ }catch(e){return []}
+}
+
+let materials=readStore(materialKey);
+let products=readStore(productKey);
 
 function digits(s){
-return String(s??'').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/,/g,'').replace(/٬/g,'').replace(/٫/g,'.');
+ return String(s??'')
+ .replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
+ .replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d))
+ .replace(/,/g,'').replace(/٬/g,'').replace(/٫/g,'.');
 }
-function num(v){const n=Number(digits(v));return Number.isFinite(n)?n:0}
-function fmt(v){return new Intl.NumberFormat('fa-IR',{maximumFractionDigits:3}).format(v||0)}
+
+function num(v){
+ const n=Number(digits(v));
+ return Number.isFinite(n)?n:0;
+}
+
+function fmt(v){
+ return new Intl.NumberFormat('fa-IR',{maximumFractionDigits:3}).format(Number(v)||0);
+}
+
 function money(v){return fmt(v)+' ریال'}
-function save(){
-localStorage.setItem(materialKey,JSON.stringify(materials));
-localStorage.setItem(productKey,JSON.stringify(products));
-}
+
 function esc(s){
-return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ return String(s??'').replace(/[&<>"']/g,c=>({
+ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+ }[c]));
 }
-function showPage(id)
-document.querySelectorAll('section').forEach(s=>s.classList.toggle('hidden',s.id!==id));
-document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.page===id));
+
+function save(){
+ localStorage.setItem(materialKey,JSON.stringify(materials));
+ localStorage.setItem(productKey,JSON.stringify(products));
 }
-document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
+
+function showPage(id){
+ document.querySelectorAll('.page').forEach(s=>s.hidden=s.id!==id);
+ document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.page===id));
+ if(id==='reports')renderReports();
+ if(id==='analysis')renderAnalysis();
+}
+
+document.querySelectorAll('.tab').forEach(b=>{
+ b.addEventListener('click',()=>showPage(b.dataset.page));
+});
 
 document.addEventListener('input',e=>{
-if(e.target.classList.contains('numeric')){
-let v=digits(e.target.value);
-if(v && !/^\d*\.?\d*$/.test(v))return;
-let parts=v.split('.');
-parts[0]=(parts[0]||'').replace(/\B(?=(\d{3})+(?!\d))/g,',');
-e.target.value=parts.join('.');
-}
+ if(e.target.classList.contains('numeric')){
+  const raw=digits(e.target.value);
+  if(raw && !/^\d*\.?\d*$/.test(raw))return;
+  const p=raw.split('.');
+  p[0]=(p[0]||'').replace(/\B(?=(\d{3})+(?!\d))/g,'٬');
+  e.target.value=p.join('٫').replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[Number(d)]);
+ }
 });
 
+function materialCost(bom){
+ return (bom||[]).reduce((sum,b)=>{
+  const m=materials.find(x=>String(x.id)===String(b.materialId));
+  return sum+(m?(Number(m.price)||0)*(Number(b.qty)||0):0);
+ },0);
+}
+
+function productTotal(p){
+ return materialCost(p.bom)+(Number(p.labor)||0)+(Number(p.overhead)||0);
+}
+
 function renderMaterials(){
-if(!materials.length){$('materialsTable').innerHTML='<div class="empty">هنوز ماده اولیه‌ای ثبت نشده است.</div>';return}
-$('materialsTable').innerHTML='<div class="table-wrap"><table><tr><th>نام</th><th>واحد</th><th>قیمت</th><th>موجودی</th><th>عملیات</th></tr>'+
-materials.map(m=>`<tr><td>${esc(m.name)}</td><td>${esc(m.unit)}</td><td>${money(m.price)}</td><td>${fmt(m.stock)}</td><td><button class="secondary" onclick="editMaterial('${m.id}')">ویرایش</button> <button class="danger" onclick="deleteMaterial('${m.id}')">حذف</button></td></tr>`).join('')+'</table></div>';
+ if(!materials.length){
+  $('materialsTable').innerHTML='<div class="empty">هنوز ماده اولیه‌ای ثبت نشده است.</div>';
+  return;
+ }
+ $('materialsTable').innerHTML='<div class="table-wrap"><table><tr><th>نام</th><th>واحد</th><th>قیمت</th><th>موجودی</th><th>عملیات</th></tr>'+
+ materials.map(m=>`<tr><td>${esc(m.name)}</td><td>${esc(m.unit)}</td><td>${money(m.price)}</td><td>${fmt(m.stock)}</td><td><button type="button" class="secondary" onclick="editMaterial('${esc(m.id)}')">ویرایش</button> <button type="button" class="danger" onclick="deleteMaterial('${esc(m.id)}')">حذف</button></td></tr>`).join('')+
+ '</table></div>';
 }
-$('materialForm').addEventListener('submit',e=>{
-e.preventDefault();
-let id=$('materialId').value;
-let m={id:id||String(Date.now()),name:$('materialName').value.trim(),unit:$('materialUnit').value,price:num($('materialPrice').value),stock:num($('materialStock').value)};
-if(id)materials=materials.map(x=>x.id===id?m:x);else materials.push(m);
-save();resetMaterial();renderAll();
-});
+
 function resetMaterial(){
-$('materialForm').reset();$('materialId').value='';$('materialTitle').textContent='ثبت ماده اولیه';$('materialSubmit').textContent='ثبت ماده اولیه';$('materialCancel').classList.add('hidden');
+ $('materialForm').reset();
+ $('materialId').value='';
+ $('materialTitle').textContent='ثبت ماده اولیه';
+ $('materialSubmit').textContent='ثبت ماده اولیه';
+ $('materialCancel').hidden=true;
 }
+
+$('materialForm').addEventListener('submit',e=>{
+ e.preventDefault();
+ const id=$('materialId').value;
+ const m={
+  id:id||String(Date.now()),
+  name:$('materialName').value.trim(),
+  unit:$('materialUnit').value,
+  price:num($('materialPrice').value),
+  stock:num($('materialStock').value)
+ };
+ if(id)materials=materials.map(x=>String(x.id)===String(id)?m:x);
+ else materials.push(m);
+ save();resetMaterial();renderAll();
+});
+
 window.editMaterial=id=>{
-let m=materials.find(x=>x.id===id);if(!m)return;
-$('materialId').value=m.id;$('materialName').value=m.name;$('materialUnit').value=m.unit;$('materialPrice').value=m.price;$('materialStock').value=m.stock;
-$('materialTitle').textContent='ویرایش ماده اولیه';$('materialSubmit').textContent='ذخیره تغییرات';$('materialCancel').classList.remove('hidden');showPage('materials');
+ const m=materials.find(x=>String(x.id)===String(id));
+ if(!m)return;
+ $('materialId').value=m.id;
+ $('materialName').value=m.name;
+ $('materialUnit').value=m.unit;
+ $('materialPrice').value=fmt(m.price);
+ $('materialStock').value=fmt(m.stock);
+ $('materialTitle').textContent='ویرایش ماده اولیه';
+ $('materialSubmit').textContent='ذخیره تغییرات';
+ $('materialCancel').hidden=false;
+ showPage('materials');
 };
+
 window.deleteMaterial=id=>{
-if(!confirm('این ماده اولیه حذف شود؟'))return;
-materials=materials.filter(x=>x.id!==id);save();renderAll();
+ if(!confirm('این ماده اولیه حذف شود؟'))return;
+ materials=materials.filter(x=>String(x.id)!==String(id));
+ save();renderAll();
 };
+
 $('materialCancel').addEventListener('click',resetMaterial);
 
 function addBomRow(selected='',qty=''){
-let row=document.createElement('div');row.className='material-row';
-row.innerHTML=`<select class="bom-material"><option value="">انتخاب ماده اولیه</option>${materials.map(m=>`<option value="${m.id}">${esc(m.name)} (${esc(m.unit)})</option>`).join('')}</select><input class="numeric bom-qty" inputmode="decimal" placeholder="مقدار مصرف" value="${qty}"><button type="button" class="danger remove-bom">حذف</button>`;
-row.querySelector('select').value=selected;
-row.querySelector('.remove-bom').addEventListener('click',()=>{row.remove();calculateLive()});
-row.querySelectorAll('input,select').forEach(el=>el.addEventListener('input',calculateLive));
-$('bomRows').appendChild(row);
+ const row=document.createElement('div');
+ row.className='material-row';
+ row.innerHTML=`<select class="bom-material"><option value="">انتخاب ماده اولیه</option>${materials.map(m=>`<option value="${esc(m.id)}">${esc(m.name)} (${esc(m.unit)})</option>`).join('')}</select><input class="numeric bom-qty" inputmode="decimal" placeholder="مقدار مصرف" value="${esc(qty)}"><button type="button" class="danger remove-bom">حذف</button>`;
+ row.querySelector('select').value=selected;
+ row.querySelector('.remove-bom').addEventListener('click',()=>{
+  row.remove();calculateLive();
+ });
+ row.querySelectorAll('input,select').forEach(el=>el.addEventListener('input',calculateLive));
+ $('bomRows').appendChild(row);
 }
+
 $('addMaterialRow').addEventListener('click',()=>addBomRow());
+
 function getBom(){
-return [...document.querySelectorAll('.material-row')].map(r=>({materialId:r.querySelector('.bom-material').value,qty:num(r.querySelector('.bom-qty').value)})).filter(x=>x.materialId&&x.qty>0);
+ return [...document.querySelectorAll('.material-row')].map(r=>({
+  materialId:r.querySelector('.bom-material').value,
+  qty:num(r.querySelector('.bom-qty').value)
+ })).filter(x=>x.materialId&&x.qty>0);
 }
-function materialCost(bom){
-return bom.reduce((sum,b)=>{let m=materials.find(x=>x.id===b.materialId);return sum+(m?m.price*b.qty:0)},0);
-}
+
 function calculateLive(){
-let cost=materialCost(getBom())+num($('laborCost').value)+num($('overheadCost').value);
-let qty=num($('goodQty').value);
-$('liveResult').textContent='کل هزینه تولید: '+money(cost)+' | بهای هر واحد سالم: '+money(qty?cost/qty:0);
+ const total=materialCost(getBom())+num($('laborCost').value)+num($('overheadCost').value);
+ const qty=num($('goodQty').value);
+ $('liveResult').textContent='کل هزینه تولید: '+money(total)+' | بهای هر واحد سالم: '+money(qty?total/qty:0);
 }
+
 $('productForm').addEventListener('input',calculateLive);
+
 $('productForm').addEventListener('submit',e=>{
-e.preventDefault();
-let qty=num($('goodQty').value);
-if(qty<=0){alert('تعداد محصول سالم باید بیشتر از صفر باشد.');return}
-let id=$('productId').value;
-let p={id:id||String(Date.now()),name:$('productName').value.trim(),qty,labor:num($('laborCost').value),overhead:num($('overheadCost').value),bom:getBom()};
-if(id)products=products.map(x=>x.id===id?p:x);else products.unshift(p);
-save();resetProduct();renderAll();
+ e.preventDefault();
+ const qty=num($('goodQty').value);
+ if(qty<=0){
+  alert('تعداد محصول سالم باید بیشتر از صفر باشد.');
+  return;
+ }
+ const id=$('productId').value;
+ const p={
+  id:id||String(Date.now()),
+  name:$('productName').value.trim(),
+  qty,
+  labor:num($('laborCost').value),
+  overhead:num($('overheadCost').value),
+  bom:getBom()
+ };
+ if(id)products=products.map(x=>String(x.id)===String(id)?p:x);
+ else products.unshift(p);
+ save();resetProduct();renderAll();
 });
+
 function resetProduct(){
-$('productForm').reset();$('productId').value='';$('bomRows').innerHTML='';$('productTitle').textContent='ثبت محصول و محاسبه بهای تمام‌شده';$('productSubmit').textContent='ثبت محصول و محاسبه';$('productCancel').classList.add('hidden');$('liveResult').textContent='پس از واردکردن اطلاعات، بهای تمام‌شده نمایش داده می‌شود.';
+ $('productForm').reset();
+ $('productId').value='';
+ $('bomRows').innerHTML='';
+ $('productTitle').textContent='ثبت محصول و محاسبه بهای تمام‌شده';
+ $('productSubmit').textContent='ثبت محصول و محاسبه';
+ $('productCancel').hidden=true;
+ $('liveResult').textContent='پس از واردکردن اطلاعات، بهای تمام‌شده نمایش داده می‌شود.';
 }
+
 window.editProduct=id=>{
-let p=products.find(x=>x.id===id);if(!p)return;
-$('productId').value=p.id;$('productName').value=p.name;$('goodQty').value=p.qty;$('laborCost').value=p.labor;$('overheadCost').value=p.overhead;
-$('bomRows').innerHTML='';p.bom.forEach(b=>addBomRow(b.materialId,b.qty));
-$('productTitle').textContent='ویرایش محصول';$('productSubmit').textContent='ذخیره تغییرات';$('productCancel').classList.remove('hidden');calculateLive();showPage('products');
+ const p=products.find(x=>String(x.id)===String(id));
+ if(!p)return;
+ $('productId').value=p.id;
+ $('productName').value=p.name;
+ $('goodQty').value=fmt(p.qty);
+ $('laborCost').value=fmt(p.labor);
+ $('overheadCost').value=fmt(p.overhead);
+ $('bomRows').innerHTML='';
+ (p.bom||[]).forEach(b=>addBomRow(b.materialId,fmt(b.qty)));
+ $('productTitle').textContent='ویرایش محصول';
+ $('productSubmit').textContent='ذخیره تغییرات';
+ $('productCancel').hidden=false;
+ calculateLive();showPage('products');
 };
+
 window.deleteProduct=id=>{
-if(!confirm('این محصول حذف شود؟'))return;
-products=products.filter(x=>x.id!==id);save();renderAll();
+ if(!confirm('این محصول حذف شود؟'))return;
+ products=products.filter(x=>String(x.id)!==String(id));
+ save();renderAll();
 };
+
 $('productCancel').addEventListener('click',resetProduct);
 
-function productTotal(p){return materialCost(p.bom)+p.labor+p.overhead}
 function renderProducts(){
-if(!products.length){$('productsTable').innerHTML='<div class="empty">هنوز محصولی ثبت نشده است.</div>';return}
-$('productsTable').innerHTML='<div class="table-wrap"><table><tr><th>محصول</th><th>تعداد سالم</th><th>کل هزینه</th><th>هزینه هر واحد</th><th>عملیات</th></tr>'+
-products.map(p=>`<tr><td>${esc(p.name)}</td><td>${fmt(p.qty)}</td><td>${money(productTotal(p))}</td><td>${money(productTotal(p)/p.qty)}</td><td><button class="secondary" onclick="editProduct('${p.id}')">ویرایش</button> <button class="danger" onclick="deleteProduct('${p.id}')">حذف</button></td></tr>`).join('')+'</table></div>';
+ if(!products.length){
+  $('productsTable').innerHTML='<div class="empty">هنوز محصولی ثبت نشده است.</div>';
+  return;
+ }
+ $('productsTable').innerHTML='<div class="table-wrap"><table><tr><th>محصول</th><th>تعداد سالم</th><th>کل هزینه</th><th>هزینه هر واحد</th><th>عملیات</th></tr>'+
+ products.map(p=>`<tr><td>${esc(p.name)}</td><td>${fmt(p.qty)}</td><td>${money(productTotal(p))}</td><td>${money(p.qty?productTotal(p)/p.qty:0)}</td><td><button type="button" class="secondary" onclick="editProduct('${esc(p.id)}')">ویرایش</button> <button type="button" class="danger" onclick="deleteProduct('${esc(p.id)}')">حذف</button></td></tr>`).join('')+
+ '</table></div>';
 }
+
 function renderDashboard(){
-$('dashProducts').textContent=fmt(products.length);
-$('dashMaterials').textContent=fmt(materials.length);
-let avg=products.length?products.reduce((s,p)=>s+productTotal(p)/p.qty,0)/products.length:0;
-$('dashCost').textContent=money(avg);
-$('dashStock').textContent=money(materials.reduce((s,m)=>s+m.price*m.stock,0));
-$('recentProducts').innerHTML=products.length?products.slice(0,5).map(p=>`<p>${esc(p.name)} — ${money(productTotal(p)/p.qty)} برای هر واحد</p>`).join(''):'هنوز محصولی ثبت نشده است.';
+ $('dashProducts').textContent=fmt(products.length);
+ $('dashMaterials').textContent=fmt(materials.length);
+ const avg=products.length?products.reduce((s,p)=>s+(p.qty?productTotal(p)/p.qty:0),0)/products.length:0;
+ $('dashCost').textContent=money(avg);
+ $('dashStock').textContent=money(materials.reduce((s,m)=>s+(Number(m.price)||0)*(Number(m.stock)||0),0));
+ $('recentProducts').innerHTML=products.length?products.slice(0,5).map(p=>`<p>${esc(p.name)} — ${money(p.qty?productTotal(p)/p.qty:0)} برای هر واحد</p>`).join(''):'هنوز محصولی ثبت نشده است.';
 }
 
 function renderReports(){
-const total=products.reduce((s,p)=>s+productTotal(p),0);
-const average=products.length?products.reduce((s,p)=>s+productTotal(p)/p.qty,0)/products.length:0;
-$('reportProducts').textContent=fmt(products.length);
-$('reportMaterials').textContent=fmt(materials.length);
-$('reportTotalCost').textContent=money(total);
-$('reportAverageCost').textContent=money(average);
-
-$('reportTable').innerHTML=products.length?
-'<div class="table-wrap"><table><tr><th>محصول</th><th>تعداد سالم</th><th>هزینه مواد</th><th>دستمزد</th><th>سربار</th><th>هزینه هر واحد</th></tr>'+
-products.map(p=>{
-const mc=materialCost(p.bom);
-return `<tr><td>${esc(p.name)}</td><td>${fmt(p.qty)}</td><td>${money(mc)}</td><td>${money(p.labor)}</td><td>${money(p.overhead)}</td><td>${money(productTotal(p)/p.qty)}</td></tr>`;
-}).join('')+'</table></div>':
-'<div class="empty">هنوز اطلاعاتی برای گزارش وجود ندارد.</div>';
+ const total=products.reduce((s,p)=>s+productTotal(p),0);
+ const average=products.length?products.reduce((s,p)=>s+(p.qty?productTotal(p)/p.qty:0),0)/products.length:0;
+ $('reportProducts').textContent=fmt(products.length);
+ $('reportMaterials').textContent=fmt(materials.length);
+ $('reportTotalCost').textContent=money(total);
+ $('reportAverageCost').textContent=money(average);
+ $('reportTable').innerHTML=products.length?'<div class="table-wrap"><table><tr><th>محصول</th><th>تعداد سالم</th><th>هزینه مواد</th><th>دستمزد</th><th>سربار</th><th>هزینه هر واحد</th></tr>'+
+ products.map(p=>`<tr><td>${esc(p.name)}</td><td>${fmt(p.qty)}</td><td>${money(materialCost(p.bom))}</td><td>${money(p.labor)}</td><td>${money(p.overhead)}</td><td>${money(p.qty?productTotal(p)/p.qty:0)}</td></tr>`).join('')+
+ '</table></div>':'<div class="empty">هنوز اطلاعاتی برای گزارش وجود ندارد.</div>';
 }
 
 function renderAnalysis(){
-const mat=products.reduce((s,p)=>s+materialCost(p.bom),0);
-const labor=products.reduce((s,p)=>s+p.labor,0);
-const overhead=products.reduce((s,p)=>s+p.overhead,0);
-const total=mat+labor+overhead;
-
-$('analysisMaterials').textContent=money(mat);
-$('analysisLabor').textContent=money(labor);
-$('analysisOverhead').textContent=money(overhead);
-
-if(!total){
-$('analysisSummary').textContent='برای تحلیل، ابتدا محصولات را ثبت کنید.';
-$('analysisDetails').innerHTML='';
-return;
-}
-
-const percent=n=>fmt(n/total*100)+'٪';
-$('analysisSummary').innerHTML=
-'سهم مواد اولیه: <b>'+percent(mat)+'</b><br>'+
-'سهم دستمزد مستقیم: <b>'+percent(labor)+'</b><br>'+
-'سهم سربار تولید: <b>'+percent(overhead)+'</b>';
-
-const largest=Math.max(mat,labor,overhead);
-let title=largest===mat?'مواد اولیه':largest===labor?'دستمزد مستقیم':'سربار تولید';
-$('analysisDetails').innerHTML='<div class="result">بیشترین سهم هزینه تولید مربوط به <b>'+title+'</b> است.</div>';
+ const mat=products.reduce((s,p)=>s+materialCost(p.bom),0);
+ const labor=products.reduce((s,p)=>s+(Number(p.labor)||0),0);
+ const over=products.reduce((s,p)=>s+(Number(p.overhead)||0),0);
+ const total=mat+labor+over;
+ $('analysisMaterials').textContent=money(mat);
+ $('analysisLabor').textContent=money(labor);
+ $('analysisOverhead').textContent=money(over);
+ $('analysisSummary').textContent=products.length?
+ 'مجموع هزینه تولید '+money(total)+' است. سهم مواد اولیه '+fmt(total?mat/total*100:0)+'٪، دستمزد '+fmt(total?labor/total*100:0)+'٪ و سربار '+fmt(total?over/total*100:0)+'٪ است.':
+ 'برای تحلیل، ابتدا محصولات را ثبت کنید.';
+ $('analysisDetails').innerHTML=products.length?`<p>تعداد محصولات بررسی‌شده: ${fmt(products.length)}</p>`:'';
 }
 
 function renderAll(){
-renderMaterials();
-renderProducts();
-renderDashboard();
-renderReports();
-renderAnalysis();
+ renderMaterials();
+ renderProducts();
+ renderDashboard();
+ renderReports();
+ renderAnalysis();
 }
 
-function convertAllNumbersToPersian(){
-document.querySelectorAll('.numeric').forEach(el=>{
-if(el.value){
-let v=digits(el.value);
-let parts=v.split('.');
-let whole=(parts.shift()||'').replace(/\B(?=(\d{3})+(?!\d))/g,'٬');
-let decimal=parts.length?'٫'+parts.join(''):'';
-el.value=(whole+decimal).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[Number(d)]);
-}
-});
-}
-
-document.querySelectorAll('.numeric').forEach(el=>{
-el.addEventListener('blur',convertAllNumbersToPersian);
-});
-
-const oldFmt=fmt;
-fmt=function(v){
-return oldFmt(v).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[Number(d)]);
-};
-
+renderAll();
+showPage('dashboard');
 </script>
 </body>
 </html>
-
